@@ -17,7 +17,7 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ./extract_data/data_from_web.py << pipeline.data_source >>
+          command: ./extract_data/data_from_web.py << parameters.data_source >>
 
 workflows:
   main:
