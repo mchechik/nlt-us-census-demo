@@ -5,8 +5,8 @@ orbs:
 
 parameters:
   data_source:
-  type: string
-  default: 'all'
+    type: string
+    default: 'all'
 
 jobs:
   build-and-print:
