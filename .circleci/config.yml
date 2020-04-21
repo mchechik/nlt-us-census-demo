@@ -1,7 +1,12 @@
 version: 2.1
 
 orbs:
-  conda: deepgenomics/conda@25.0.0
+  python: circleci/python@0.2.1
+
+parameters:
+  data_source:
+  type: string
+  default: 'all'
 
 jobs:
   build-and-print:
@@ -12,7 +17,7 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ls -la
+          command: ./extract_data/data_from_web.py << pipeline.data_source >>
 
 workflows:
   main:
