@@ -3,13 +3,12 @@ version: 2.1
 orbs:
   python: circleci/python@0.2.1
 
-parameters:
-  data_source:
-    type: string
-    default: 'all'
-
 jobs:
   build-and-print:
+    parameters:
+      data_source:
+        type: string
+        default: 'all'
     executor: python/default
     steps:
       - checkout
