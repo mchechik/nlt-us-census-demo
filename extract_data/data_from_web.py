@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 
 # Base URL
 URL = 'https://lehd.ces.census.gov/data'
+# Local dir to save data
+DATA_DIR = './data'
 
 # TODO Expand paths map to include older versions
 data_source_paths = {
@@ -15,9 +17,9 @@ data_source_paths = {
 
 # Rate limit client to not crash server, in effect finding the most number of data files
 # in MAX_REQUESTS number of requests
-MAX_REQUESTS = 20
+MAX_REQUESTS = 1
 curr_requests = 0
-  
+
 try:
     data_file_collector = []
     if len(sys.argv) != 2:
@@ -44,7 +46,19 @@ try:
                     elif 'csv' in curr_link:
                         data_file_collector.append(URL + curr_link)
             get_csv_data(URL)
+            print('ATTEMPTING TO DOWNLOAD:')
             print(data_file_collector)
+
+            for url in data_file_collector:
+                file_resp = requests.get(url)
+                if file_resp.status_code == 200:
+                    print('Saving file from {:s} to directory {:s}'.format(url, DATA_DIR))
+                    fs = open(DATA_DIR + '/' + url.split('/')[-1], 'wb')
+                    fs.write(file_resp.content)
+                    fs.close()
+                else:
+                    print('Error downloading {:s}\nReceived non-200 status code.'.format(url))
+
         else:
             raise Exception('unsupported')
 

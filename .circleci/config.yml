@@ -2,23 +2,32 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
+  aws-s3: circleci/aws-s3@1.0.15
 
 jobs:
-  build-and-print:
+  upload_to_s3:
     parameters:
       data_source:
         type: string
-        default: 'all'
+        default: 'lodes'
     executor: python/default
     steps:
+      - run: mkdir data
       - checkout
       - python/load-cache
       - python/install-deps
       - python/save-cache
       - run:
           command: ./extract_data/data_from_web.py << parameters.data_source >>
+      - aws-s3/copy:
+          aws-access-key-id: access_key
+          aws-secret-access-key: secret_key
+          aws-region: us-east-1
+          from: data
+          to: 's3://nlt-us-census-demo'
+      - run: rm -rf data
 
 workflows:
   main:
     jobs:
-      - build-and-print
+      - upload_to_s3
