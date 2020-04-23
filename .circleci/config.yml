@@ -17,17 +17,15 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run: mkdir data
-      - run: ls -la
-      - run: ls -la data
-      - run: ls -la ./*/*
-      #- run:
-      #    command: ./extract_data/data_from_web.py << parameters.data_source >>
-      #- aws-s3/copy:
-      #    aws-access-key-id: access_key
-      #    aws-secret-access-key: secret_key
-      #    aws-region: region
-      #    from: './data/*'
-      #    to: 's3://nlt-us-census-demo/'
+      - run: chmod -R 755 ./extract_data/*
+      - run:
+          command: ./extract_data/data_from_web.py << parameters.data_source >>
+      - aws-s3/copy:
+          aws-access-key-id: access_key
+          aws-secret-access-key: secret_key
+          aws-region: region
+          from: './data/*'
+          to: 's3://nlt-us-census-demo/'
 
 workflows:
   main:
