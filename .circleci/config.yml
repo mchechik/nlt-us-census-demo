@@ -13,6 +13,8 @@ jobs:
     executor: python/default
     steps:
       - run: mkdir data
+      - run: ls -la
+      - run: df -h
       - checkout
       - python/load-cache
       - python/install-deps
