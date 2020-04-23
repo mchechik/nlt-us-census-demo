@@ -12,13 +12,11 @@ jobs:
         default: 'lodes'
     executor: python/default
     steps:
-      - run: mkdir data
-      - run: ls -la
-      - run: df -h
       - checkout
       - python/load-cache
       - python/install-deps
       - python/save-cache
+      - run: mkdir data
       - run:
           command: ./extract_data/data_from_web.py << parameters.data_source >>
       - aws-s3/copy:
@@ -26,8 +24,7 @@ jobs:
           aws-secret-access-key: secret_key
           aws-region: region
           from: './data/*'
-          to: 's3://nlt-us-census-demo'
-      - run: rm -rf data
+          to: 's3://nlt-us-census-demo/'
 
 workflows:
   main:
