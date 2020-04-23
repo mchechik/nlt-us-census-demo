@@ -22,8 +22,8 @@ jobs:
       - aws-s3/copy:
           aws-access-key-id: access_key
           aws-secret-access-key: secret_key
-          aws-region: us-east-1
-          from: data
+          aws-region: region
+          from: './data/*'
           to: 's3://nlt-us-census-demo'
       - run: rm -rf data
 
