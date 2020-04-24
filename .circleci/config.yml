@@ -18,10 +18,7 @@ jobs:
       - python/save-cache
       - run: mkdir data
       - run: chmod -R 755 ./extract_data/*
-      - run: which python
-      - run: which python3
-      - run:
-          command: ./extract_data/data_from_web.py << parameters.data_source >>
+      - run: python3 ./extract_data/data_from_web.py << parameters.data_source >>
       - aws-s3/copy:
           aws-access-key-id: access_key
           aws-secret-access-key: secret_key
