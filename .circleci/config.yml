@@ -24,6 +24,8 @@ jobs:
           aws-region: region
           from: './data/*'
           to: 's3://nlt-us-census-demo/'
+          arguments: '--recursive'
+
 
 workflows:
   main:
