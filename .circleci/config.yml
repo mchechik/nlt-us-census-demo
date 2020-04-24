@@ -16,7 +16,6 @@ jobs:
       - python/load-cache
       - python/install-deps
       - python/save-cache
-      - run: mkdir data
       - run: chmod -R 755 ./extract_data/*
       - run: python3 ./extract_data/data_from_web.py << parameters.data_source >>
       - aws-s3/copy:
